@@ -26,10 +26,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/animations.css" />
+    <?php include 'includes/header.html'?>
     <script type="module" src="js/bundle.js"></script>
-    <link href="style/style.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
     <title>Therapy Session - MediStation</title>
     <style>
     body {
@@ -56,22 +55,22 @@
 </head>
 
 <body class="bg-slate-700 w-full">
-    <div class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] items-center justify-center bg-black/70 rounded text-white px-4 py-2 hidden"
+    <div class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] items-center justify-center bg-black/70 rounded text-white px-4 py-2 hidden space-x-2"
         id="reconnect">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 animate-spin rotate-180" fill="none"
             viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
         </svg>
-        <p>Reconnecting</p>
+        <p id="connect-text">Reconnecting</p>
     </div>
-    <div class="flex flex-col w-full h-screen items-center overflow-hidden">
+    <div class="flex flex-col w-full min-h-screen items-center overflow-auto">
         <div class="grow flex items-center justify-between w-full">
-            <div class="grow flex items-center justify-center">
+            <div class="grow flex-1 flex items-center justify-center">
                 <div id="main" class="flex flex-wrap items-center justify-center gap-2">
                 </div>
             </div>
-            <div class="h-[calc(100vh-56px)] lg:w-[25%] w-[45%] bg-slate-400 hidden" id="chat">
+            <div class="h-[calc(100vh-56px)] lg:w-[25%] w-[45%] bg-slate-400 chat hidden" id="chat">
                 <div class="flex flex-col h-full">
                     <div class="text-center font-bold text-3xl text-emerald-400 sticky top-0 bg-white py-1">
                         <h3>Therapy Chat</h3>
@@ -90,7 +89,7 @@
                     <div class="bg-white p-2">
                         <div class="flex item-center space-x-2">
                             <div class="bg-slate-800 rounded-full px-2 grow flex items-center">
-                                <input class="outline-none bg-transparent text-white grow"
+                                <input class="outline-none bg-transparent text-white grow p-1"
                                     placeholder="Type your message here" id="message-input" />
                             </div>
                             <button class="bg-blue-500 rounded-full p-1 items-center justify-center text-white hidden"

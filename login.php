@@ -62,8 +62,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style/style.css" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <?php include 'includes/header.html'?>
     <title>Login - MediStation</title>
 </head>
 
@@ -159,7 +158,7 @@
                             <a class="cursor-pointer hover:underline" href="registration.php">Don't have an account?
                                 Sign Up</a>
                             <p class="hidden lg:block">|</p>
-                            <a class="cursor-pointer hover:underline">Forgot password?</a>
+                            <a href="reset-password.php" class="cursor-pointer hover:underline">Forgot password?</a>
                         </div>
                     </div>
                 </form>
@@ -169,9 +168,12 @@
         <footer class="bg-gray-300 flex flex-col items-center justify-center space-y-3 pb-2">
             <div class="lg:max-w-[85%] w-full px-6 flex flex-col lg:flex-row items-center justify-between space-x-4">
                 <p class="text-center lg:w-[30rem] font-bold text-blue-700">If you are in a crisis or any other person
-                    may be in danger,
-                    <br>DO NOT USE THIS PLATFORM.<br>
-                    Please call 911 or go to the nearest hospital.<br>
+                    may
+                    be in
+                    danger,DO NOT USE
+                    THIS.
+                    Please call 911 or go to
+                    the nearest hospital
                     Click here to see international suicide hotlines.</p>
                 <img src="images/medias.jpg" class="w-[17rem]" />
             </div>

@@ -37,69 +37,70 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Dashboard - MediStation</title>
+    <?php include 'includes/header.html'?>
+    <title>Document</title>
 </head>
 
-<body class="min-h-screen flex flex-col bg-[#cbd4e1]">
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-[#90a7c1] to-slate-600">
     <div class="flex flex-1 w-full h-full">
         <!-- Sidebar -->
-        <?php include 'client-sidebar.php' ?>
+        <?php include 'includes/client-sidebar.php' ?>
         <div class="flex flex-col grow">
-            <?php include 'client-nav.php' ?>
+            <?php include 'includes/client-nav.php' ?>
             <div class="grow flex flex-col justify-center items-center space-y-4 my-4">
                 <div class="flex flex-wrap gap-4 items-center justify-center my-4">
-                    <div
-                        class="bg-white rounded group hover:-translate-y-4 transition-all duration-300 cursor-pointer p-4 max-w-[19rem] space-y-4 shadow-xl">
-                        <h2
-                            class="font-medium text-4xl text-emerald-600 group-hover:underline underline-offset-4 transition duration-300">
+                    <a href="book-appointments.php?type=therapy"
+                        class="bg-white rounded group hover:-translate-y-4 transition-all duration-300 cursor-pointer max-w-[19rem] space-y-4 shadow-xl">
+                        <h2 class="font-medium text-2xl text-white bg-emerald-600 text-center p-2">
                             Therapy
                         </h2>
-                        <p>Our psychiatrist are here to help you with life’s challenges. You can schedule an appointment
+                        <p class="p-2">Our psychiatrist are here to help you with life’s challenges. You can schedule an
+                            appointment
                             with one of our providers online, or schedule by calling 877-410-5548. Scheduling can be
                             done 24 hours a day, 7 days a week. These professionals have been hand-selected, trained,
                             and certified in telehealth to deliver you the best care possible.</p>
-                    </div>
-                    <div
-                        class="bg-white rounded group hover:-translate-y-4 transition-all duration-300 cursor-pointer p-4 max-w-[19rem] space-y-4 shadow-xl">
-                        <h2
-                            class="font-medium text-4xl text-emerald-600 group-hover:underline underline-offset-4 transition duration-300">
+                    </a>
+                    <a href="book-appointments.php?type=psychiatry"
+                        class="bg-white rounded group hover:-translate-y-4 transition-all duration-300 cursor-pointer max-w-[19rem] space-y-4 shadow-xl">
+                        <h2 class="font-medium text-2xl text-white bg-blue-800 text-center p-2">
                             Psychiatry
                         </h2>
-                        <p>Our psychiatrists are here to help you with life’s challenges. Psychiatrists can prescribe
+                        <p class="p-2">Our psychiatrists are here to help you with life’s challenges. Psychiatrists can
+                            prescribe
                             medication, but at this time OCG psychiatrists are not able to prescribe any psychotropic
                             medications that are deemed controlled substances. You can schedule an appointment with one
                             of our providers online, or by calling 877-410-5548. Scheduling can be done 24 hours a day,
                             7 days a week.</p>
-                    </div>
-                    <div
-                        class="bg-white rounded group hover:-translate-y-4 transition-all duration-300 cursor-pointer p-4 max-w-[19rem] space-y-4 shadow-xl">
-                        <h2
-                            class="font-medium text-4xl text-emerald-600 group-hover:underline underline-offset-4 transition duration-300">
+                    </a>
+                    <a href="book-appointments.php?type=adolescent-therapy"
+                        class="bg-white rounded group hover:-translate-y-4 transition-all duration-300 cursor-pointer max-w-[19rem] space-y-4 shadow-xl">
+                        <h2 class="font-medium text-2xl text-white bg-violet-700 text-center p-2">
                             Adolescent Therapy
                         </h2>
-                        <p>Please call 877-410-5548 for an appointment. The Adolescent Behavioral Health Practice is
-                            available to see children ages 10-17 with behavioral and mental health needs. Psychiatrists are
+                        <p class="p-2">Please call 877-410-5548 for an appointment. The Adolescent Behavioral Health
+                            Practice is
+                            available to see children ages 10-17 with behavioral and mental health needs. Therapists are
                             ready to help your child with anxiety, ADHD, school problems, eating difficulties,
                             depression or other behavioral or emotional challenges.</p>
-                    </div>
+                    </a>
                 </div>
-                <div class="bg-white max-w-[75%] w-full mx-auto rounded p-2 shadow-xl">
-                    <h3 class="text-center font-semibold text-2xl">Upcoming Appointments</h3>
-                    <table class="my-2 w-full">
-                        <tbody>
-                            <?php
-                            foreach ($upcomingappointments as $row): ?>
-                            <tr class="border-b border-slate-400">
-                                <?php $room = $row['room']; ?>
-                                <td><?= $row['FName']." ".$row['LName'] ?></td>
-                                <td><?= $row['Email'] ?></td>
-                                <td><?= date('F j, Y g:i A', strtotime($row['aptDate']." ".$row['aptTime'])) ?></td>
+                <div class="bg-white max-w-[75%] w-full mx-auto rounded shadow-xl">
+                    <h3 class="text-center font-semibold text-2xl bg-amber-600 text-white p-2">Upcoming Appointments
+                    </h3>
+                    <div class="p-2">
+                        <table class="my-2 w-full">
+                            <tbody>
                                 <?php
+                            foreach ($upcomingappointments as $row): ?>
+                                <tr class="border-b border-slate-400">
+                                    <?php $room = $row['room']; ?>
+                                    <td><?= $row['FName']." ".$row['LName'] ?></td>
+                                    <td><?= $row['Email'] ?></td>
+                                    <td><?= date('F j, Y g:i A', strtotime($row['aptDate']." ".$row['aptTime'])) ?></td>
+                                    <?php
                                 if ($row['roomGenerated']){
                                     ?>
-                                <?php
+                                    <?php
                                     echo "
                                     <td>
                                         <a href='video-conference.php?room=$room'>
@@ -113,12 +114,34 @@
                                     </td>";
                                 }
                             ?>
-                            </tr>
-                            <?php endforeach ?>
-                        </tbody>
-                    </table>
+                                </tr>
+                                <?php endforeach ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="bg-white rounded group transition-all duration-300 w-[35rem] shadow-xl">
+                    <h3 class="text-center font-semibold text-2xl bg-cyan-600 text-white p-2">Send us a message
+                    </h3>
+                    <div class="p-2 space-y-2">
+                        <label for="subject">Subject</label>
+                        <div class="p-2 ring-1 ring-slate-400 hover:ring-sky-500 focus-within:ring-sky-500 rounded">
+                            <input id="message" class="outline-none w-full" />
+                        </div>
+                    </div>
+                    <div class="p-2 space-y-2">
+                        <label for="message">Message</label>
+                        <div
+                            class="p-2 shadow-xl ring-1 ring-slate-400 hover:ring-sky-500 focus-within:ring-sky-500 rounded">
+                            <textarea id="message" class="outline-none w-full" rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="w-full flex items-center justify-center p-2">
+                        <button class="bg-teal-500 text-white px-6 py-2 rounded hover:scale-105">Send</button>
+                    </div>
                 </div>
             </div>
+            <?php include 'includes/footer.html'?>
         </div>
     </div>
 </body>

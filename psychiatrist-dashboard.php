@@ -81,13 +81,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <?php include 'includes/header.html'?>
     <script src="js/main.js" defer></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Document</title>
 </head>
 
-<body class="min-h-screen flex flex-col bg-[#cbd4e1]" id="psyBody">
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-[#90a7c1] to-slate-600" id="psyBody">
     <div class="fixed z-50 inset-0 bg-black/50 items-center justify-center hidden" id="psyModal">
         <div class="max-w-[50%] w-full bg-gray-200 shadow-lg rounded-md p-3 flex flex-col">
             <h2 class="font-semibold text-lg text-center">Add New Availability</h2>
@@ -126,147 +125,159 @@
     </div>
     <div class="flex flex-1 w-full h-full">
         <!-- Sidebar -->
-        <?php include 'psychiatrist-sidebar.php'; ?>
-        <div class="flex flex-col grow">
-            <nav class="bg-[#6bb135] py-3 px-4 flex space-x-6 justify-end text-white">
+        <?php include 'includes/psychiatrist-sidebar.php'; ?>
+        <div class="flex flex-1 flex-col grow">
+            <!-- <nav class="bg-[#6bb135] py-3 px-4 flex space-x-6 justify-end text-white sticky top-0">
                 <a href="logout.php" class="cursor-pointer">
                     <span class="material-icons">
                         logout
                     </span>
                 </a>
-            </nav>
-            <div class="mx-auto flex flex-col w-[75%] bg-white mt-2 rounded p-2">
-                <h3 class="text-center font-semibold text-2xl mb-2">Upcoming Appointments</h3>
-                <table class="my-2">
-                    <tbody>
-                        <?php
-                            foreach ($upcomingappointments as $row): ?>
-                        <tr class="border-b border-slate-400">
-                            <?php $room = $row['room']; $upId = $row['id']; ?>
-                            <td><?= $row['FName']." ".$row['LName'] ?></td>
-                            <td><?= $row['Email'] ?></td>
-                            <td><?= date('F j, Y g:i A', strtotime($row['aptDate']." ".$row['aptTime'])) ?></td>
-                            <?php
-                                if ($row['roomGenerated']){
-                                    ?>
-                            <?php
-                                    echo "
-                                    <td>
-                                        <a href='video-conference.php?room=$room'>
-                                            <button class='bg-emerald-600 text-white px-4 py-2 my-0.5 rounded'>Join Room</button>
-                                        </a>
-                                    </td>";
-                                } else {
-                                    echo "
-                                    <td>
-                                        <a href='generateRoom.php?id=$upId'>
-                                            <button class='bg-slate-600 text-white px-4 py-2 my-0.5 rounded'>Generate Room Now</button>
-                                        </a>
-                                    </td>";
-                                }
-                            ?>
-                        </tr>
-                        <?php endforeach ?>
-                    </tbody>
-                </table>
-            </div>
-            <div class="mx-auto flex flex-col w-[75%] bg-white my-2 rounded p-2">
-                <h3 class="text-center font-semibold text-2xl mb-2">My Availability</h3>
-                <div class="flex w-full items-center justify-between">
-                    <form class="w-[25%]" method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>"
-                        id="avaFilter">
-                        <select class="w-full" id="avaFilterValue" name="status" class="ring-1 ring-black">
-                            <option value="Booked">Booked</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Open">Open</option>
-                        </select>
-                    </form>
-                    <button class="bg-slate-600 text-white px-4 py-2 rounded" id="addAva">Add Availability</button>
-                </div>
-                <table class="border-collapse w-full border border-slate-500 my-2">
-                    <thead>
-                        <tr class="text-left bg-slate-800 text-white text-xl font-semibold">
-                            <th class="border border-slate-600">Date</th>
-                            <th class="border border-slate-600">Time</th>
-                            <th class="border border-slate-600">Status</th>
-                            <th class="border border-slate-600">Manage</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            foreach ($avaDate as $row): ?>
-                        <tr class="bg-slate-500 text-white hover:bg-slate-600 border border-slate-400">
-                            <td><?= date('F j, Y', strtotime($row['avaDate'])) ?></td>
-                            <td><?= date('g:i A', strtotime($row['avaTime'])) ?></td>
-                            <td><?= $row['status'] ?></td>
-                            <?php
-                                if ($row['status'] == 'Open'){
-                                    ?>
-                            <td>
-                                <a href='update-appointment.php?id=<?php echo $row['id'] ?>&status=Closed'>
-                                    <button class="bg-red-500 text-white px-4 py-2 rounded">Cancel</button>
-                                </a>
-                            </td>
-                            <?php
-                                } else {
-                                    echo "<td></td>";
-                                }
-                            ?>
-                        </tr>
-                        <?php endforeach ?>
-                    </tbody>
-                </table>
-                <?php if ($number_of_pages > 0) {
-                    ?>
-                <div class="w-full flex items-center justify-end">
-                    <div class="flex items-center space-x-2 bg-slate-900/70 text-white rounded px-2 py-1">
-                        <a class="flex items-center" href="psychiatrist-dashboard.php?status=<?php echo $status ?>&page=<?php 
-                            if ($page == 1) {
-                                echo $page;
-                            } else {
-                                echo $page - 1;
-                            }
-                            ?> ">
-                            <span class="material-icons cursor-pointer">
-                                arrow_back_ios
-                            </span>
-                        </a>
-                        <div class="flex items-center space-x-1">
-                            <?php
-                                    for($p=1; $p<=$number_of_pages; $p++){
-                                        if ($p == $page){
+            </nav> -->
+            <div class="flex flex-col items-center justify-center grow space-y-6">
+                <div class="mx-auto flex flex-col w-[75%] bg-white mt-2 rounded">
+                    <h3
+                        class="text-center font-semibold p-2 text-2xl bg-green-500 text-white overflow-hidden rounded-t">
+                        Upcoming
+                        Appointments
+                    </h3>
+                    <div class="p-2 w-full">
+                        <table class="w-full">
+                            <tbody>
+                                <?php
+                                    foreach ($upcomingappointments as $row): ?>
+                                <tr class="border-b border-slate-400">
+                                    <?php $room = $row['room']; $upId = $row['id']; ?>
+                                    <td><?= $row['FName']." ".$row['LName'] ?></td>
+                                    <td><?= $row['Email'] ?></td>
+                                    <td><?= date('F j, Y g:i A', strtotime($row['aptDate']." ".$row['aptTime'])) ?></td>
+                                    <?php
+                                        if ($row['roomGenerated']){
+                                            ?>
+                                    <?php
                                             echo "
-                                                <a class='border border-1 border-sky-600 px-2 py-0.5 rounded text-white cursor-not-allowed'
-                                    href='psychiatrist-dashboard.php?status=$status&page=$p'>$p</a>
-                                ";
-                                } else {
-                                echo "
-                                <a class='bg-slate-800/80 px-2 py-0.5 rounded text-white'
-                                    href='psychiatrist-dashboard.php?status=$status&page=$p'>$p</a>
-                                ";
-                                }
-                                ?>
-                            <?php
-                                    }
-                                ?>
-                        </div>
-                        <a class="flex items-center" href="psychiatrist-dashboard.php?status=<?php echo $status ?>&page=<?php 
-                            if ($page == $number_of_pages) {
-                                echo $page;
-                            } else {
-                                echo $page + 1;
-                            }
-                            ?>">
-                            <span class="material-icons">
-                                arrow_forward_ios
-                            </span>
-                        </a>
+                                            <td>
+                                                <a href='video-conference.php?room=$room'>
+                                                    <button class='bg-emerald-600 text-white px-4 py-2 my-0.5 rounded'>Join Room</button>
+                                                </a>
+                                            </td>";
+                                        } else {
+                                            echo "
+                                            <td>
+                                                <a href='generateRoom.php?id=$upId'>
+                                                    <button class='bg-slate-600 text-white px-4 py-2 my-0.5 rounded'>Generate Room Now</button>
+                                                </a>
+                                            </td>";
+                                        }
+                                    ?>
+                                </tr>
+                                <?php endforeach ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <?php
-                } ?>
+                <div class="mx-auto flex flex-col w-[75%] bg-white my-2 rounded">
+                    <h3 class="text-center font-semibold text-2xl p-2 bg-amber-500 text-white rounded-t">My Availability
+                    </h3>
+                    <div class="p-2">
+                        <div class="flex w-full items-center justify-between">
+                            <form class="w-[25%]" method="GET"
+                                action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" id="avaFilter">
+                                <select class="w-full" id="avaFilterValue" name="status" class="ring-1 ring-black">
+                                    <option value="Booked">Booked</option>
+                                    <option value="Open">Open</option>
+                                </select>
+                            </form>
+                            <button class="bg-slate-600 text-white px-4 py-2 rounded" id="addAva">Add
+                                Availability</button>
+                        </div>
+                        <table class="border-collapse w-full border border-slate-500 my-2">
+                            <thead>
+                                <tr class="text-left bg-slate-800 text-white text-xl font-semibold">
+                                    <th class="border border-slate-600">Date</th>
+                                    <th class="border border-slate-600">Time</th>
+                                    <th class="border border-slate-600">Status</th>
+                                    <th class="border border-slate-600">Manage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($avaDate as $row): ?>
+                                <tr class="bg-slate-500 text-white hover:bg-slate-600 border border-slate-400">
+                                    <td><?= date('F j, Y', strtotime($row['avaDate'])) ?></td>
+                                    <td><?= date('g:i A', strtotime($row['avaTime'])) ?></td>
+                                    <td><?= $row['status'] ?></td>
+                                    <?php
+                                    if ($row['status'] == 'Open'){
+                                        ?>
+                                    <td>
+                                        <a href='update-appointment.php?id=<?php echo $row['id'] ?>&status=Closed'>
+                                            <button class="bg-red-500 text-white px-4 py-2 rounded">Cancel</button>
+                                        </a>
+                                    </td>
+                                    <?php
+                                    } else {
+                                        echo "<td></td>";
+                                    }
+                                ?>
+                                </tr>
+                                <?php endforeach ?>
+                            </tbody>
+                        </table>
+                        <?php if ($number_of_pages > 0) {
+                        ?>
+                        <div class="w-full flex items-center justify-end">
+                            <div class="flex items-center space-x-2 bg-slate-900/70 text-white rounded px-2 py-1">
+                                <a class="flex items-center" href="psychiatrist-dashboard.php?status=<?php echo $status ?>&page=<?php 
+                                if ($page == 1) {
+                                    echo $page;
+                                } else {
+                                    echo $page - 1;
+                                }
+                                ?> ">
+                                    <span class="material-icons cursor-pointer">
+                                        arrow_back_ios
+                                    </span>
+                                </a>
+                                <div class="flex items-center space-x-1">
+                                    <?php
+                                        for($p=1; $p<=$number_of_pages; $p++){
+                                            if ($p == $page){
+                                                echo "
+                                                    <a class='border border-1 border-sky-600 px-2 py-0.5 rounded text-white cursor-not-allowed'
+                                        href='psychiatrist-dashboard.php?status=$status&page=$p'>$p</a>
+                                    ";
+                                    } else {
+                                    echo "
+                                    <a class='bg-slate-800/80 px-2 py-0.5 rounded text-white'
+                                        href='psychiatrist-dashboard.php?status=$status&page=$p'>$p</a>
+                                    ";
+                                    }
+                                    ?>
+                                    <?php
+                                        }
+                                    ?>
+                                </div>
+                                <a class="flex items-center" href="psychiatrist-dashboard.php?status=<?php echo $status ?>&page=<?php 
+                                if ($page == $number_of_pages) {
+                                    echo $page;
+                                } else {
+                                    echo $page + 1;
+                                }
+                                ?>">
+                                    <span class="material-icons">
+                                        arrow_forward_ios
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        <?php
+                    } ?>
+                    </div>
 
+                </div>
             </div>
+            <?php include 'includes/footer.html'?>
         </div>
     </div>
 </body>

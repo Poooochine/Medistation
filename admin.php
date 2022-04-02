@@ -3,7 +3,18 @@
     require_once 'conn.php';
 
     if($_COOKIE['accountType'] != 'System Admin'){
-        header('Location: home.php');
+        header('Location: login.php');
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == "GET"){
+        $sql = "SELECT FName, LName, image FROM sysadmin WHERE AccountID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $_COOKIE['accountId']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_object();
+
+        $name = $user->FName." ".$user->LName;
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -94,9 +105,9 @@
                 if ($val){
                     $sql = "INSERT INTO physician (physicianID, FName, LName, Gender, Phone, Speciality, AccountID) VALUES (?, ?, ?, ?, ?, ?, ?)";
                     $phyId = uniqid("phy");
-                    $speciality = $_POST["Speciality"];
+                    $specialty = $_POST["specialty"];
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("sssssss", $phyId, $first_name, $last_name, $gender, $phone, $speciality, $AccountId);
+                    $stmt->bind_param("sssssss", $phyId, $first_name, $last_name, $gender, $phone, $specialty, $AccountId);
                     $val = $stmt->execute();
                     if ($val){
                         $sql = "INSERT INTO physicianprofile (physicianID) VALUES (?)";
@@ -181,13 +192,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <?php include 'includes/header.html'?>
     <script src="js/systemAdmin.js" defer></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Admin - MediStation</title>
 </head>
 
-<body class="min-h-screen flex flex-col bg-[#cbd4e1]">
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-[#90a7c1] to-slate-600">
     <div class="absolute w-full h-full bg-black/50 items-center justify-center hidden" id="modal">
         <div class="max-w-[50%] w-full bg-gray-200 shadow-lg rounded-md p-3 flex flex-col">
             <h2 class="font-semibold text-lg text-center">Add New Staff</h2>
@@ -263,16 +273,9 @@
     </div>
     <div class="flex flex-1 w-full h-full">
         <!-- Sidebar -->
-        <div class="h-screen bg-blue-700 w-[15%]"></div>
+        <?php include 'includes/admin-sidebar.php' ?>
         <!-- Table -->
         <div class="flex flex-col grow">
-            <nav class="bg-emerald-600 py-3 px-4 flex justify-end text-white">
-                <a href="logout.php" class="cursor-pointer">
-                    <span class="material-icons">
-                        logout
-                    </span>
-                </a>
-            </nav>
             <div class="bg-white p-3 max-w-[90%] lg:max-w-[85%] w-full mx-auto my-auto rounded-md">
                 <h2 class="text-center font-semibold text-3xl">Account Management</h2>
                 <div class="flex w-full justify-between items-center">

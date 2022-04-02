@@ -25,11 +25,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <?php include 'includes/header.html'?>
     <title>Profile Setup - MediStation</title>
 </head>
 
-<body class="min-h-screen flex flex-col bg-[#cbd4e1]">
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-blue-500 to-emerald-700">
     <nav class="items-center justify-between py-2 hidden md:flex bg-white">
         <div class="flex items-center">
             <a href="home.php" class="pl-4">

@@ -127,17 +127,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <?php include 'includes/header.html'?>
     <script src="js/client-profile.js" defer></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Document</title>
 </head>
 
-<body class="min-h-screen flex flex-col bg-[#cbd4e1]">
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-[#90a7c1] to-slate-600">
     <div class="flex flex-1 w-full h-full">
-        <?php include 'client-sidebar.php' ?>
+        <?php include 'includes/client-sidebar.php' ?>
         <div class="flex flex-col grow">
-            <?php include 'client-nav.php' ?>
+            <?php include 'includes/client-nav.php' ?>
             <div class="flex gap-6 p-4">
                 <div class="w-[30%]">
                     <div class="flex flex-col items-center space-y-3 px-3 py-6 bg-white rounded shadow-xl">
@@ -265,6 +264,7 @@
                     </div>
                 </form>
             </div>
+            <?php include 'includes/footer.html'?>
         </div>
     </div>
 </body>

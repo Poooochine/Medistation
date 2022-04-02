@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Information - MediStation</title>
+    <?php include 'includes/header.html'?>
+    <title>Document</title>
 </head>
 
-<body class="bg-[#cbd4e1]">
+<body class="bg-gray-200">
     <main class="container bg-white max-w-6xl mx-auto min-h-screen shadow-xl">
         <?php include 'main-nav.html' ?>
         <img src="./images/info.png" alt="info">

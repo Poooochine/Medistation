@@ -81,13 +81,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <?php include 'includes/header.html'?>
     <script src="js/main.js" defer></script>
     <title>Registration - MediStation</title>
 </head>
 
-<body class="bg-gray-300">
+<body class="bg-gradient-to-br from-[#90a7c1] to-white/60">
     <div class="bg-black/40 absolute inset-0 min-h-screen overflow-y-auto hidden" id="reg-modal">
         <div class="fixed right-2 md:right-5 top-2 flex items-center bg-black/50 text-white cursor-pointer select-none"
             id="close-reg-modal">
@@ -99,7 +98,7 @@
             <?php include 'includes/terms-condition.html' ?>
         </div>
     </div>
-    <div class="min-h-screen flex flex-col bg-gradient-to-br from-[#90a7c1] to-slate-600">
+    <div class="min-h-screen flex flex-col">
         <nav class="items-center py-2 hidden md:flex bg-white justify-between">
             <a href="home.php" class="pl-4">
                 <img src="./images/logo.png" class="h-[4rem]" />
@@ -223,6 +222,7 @@
                 </div>
             </form>
         </div>
+        <?php include 'includes/footer.html'?>
     </div>
     <script>
     const menu = document.getElementById("open");
