@@ -51,7 +51,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include 'includes/header.html'?>
-    <title>Document</title>
+    <title>Reset Password</title>
 
 </head>
 
@@ -59,9 +59,17 @@
     <?php if(isset($_GET['reset'])) {
         ?>
     <div class="absolute top-5 right-5" id="popup">
-        <div class="bg-white text-black font-medium px-4 py-3 overflow-hidden rounded relative max-w-lg">
-            <p class="text-green-600">Success!</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, hic.</p>
+        <div class="bg-white text-black font-medium px-4 py-3 overflow-hidden rounded relative w-[25rem]">
+            <?php if ($_GET['reset'] == "success") {
+                echo '<p class="text-green-600">SUCCESS!</p>';
+                echo '<p>Check your email for the link to rest you password.</p>';
+            } else if ($_GET['reset'] == "failed") {
+                echo '<p class="text-red-600">Failed!</p>';
+                echo '<p>Something went wrong. Please try again later.</p>';
+            } else {
+                echo '<p class="text-red-600">Failed!</p>';
+                echo '<p>User not found!</p>';
+            } ?>
             <button class="absolute top-0 right-2 text-2xl hover:text-red-400" id="close-popup">
                 &times;
             </button>
